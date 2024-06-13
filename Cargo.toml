@@ -1,0 +1,16 @@
+[package]
+name = "esp32c3-working"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+esp-backtrace = { version = "0.12.0", features = ["esp32c3", "exception-handler", "panic-handler", "println"] }
+esp-hal = { version = "0.18.0", features = ["esp32c3"] }
+esp-println = { version = "0.9.1", features = ["esp32c3"] }
+
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1
+incremental = false
+build-override.opt-level = "z"
