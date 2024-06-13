@@ -27,6 +27,7 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy
+          targets: riscv32imc-unknown-none-elf
 
       - name: Setup Rust cache 🗃️
         uses: Swatinem/rust-cache@v2
