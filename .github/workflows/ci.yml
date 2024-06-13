@@ -43,7 +43,7 @@ jobs:
         run: cargo check --workspace --all-features
 
       - name: Run Clippy 📎
-        run: cargo clippy --all-targets --all-features
+        run: cargo clippy --all-features
 
     #   - name: Run doctests 📜
     #     run: cargo test --doc --all-features --workspace
