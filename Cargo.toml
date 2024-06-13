@@ -16,4 +16,4 @@ lto = true
 strip = true
 codegen-units = 1
 incremental = false
-build-override.opt-level = "z"
+opt-level = "z"
