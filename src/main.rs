@@ -6,7 +6,7 @@ use embassy_time::Timer;
 use esp_backtrace as _;
 use esp_hal::{
     clock::ClockControl, peripherals::Peripherals, prelude::*, system::SystemControl,
-    timer::systimer::SystemTimer,
+    timer::timg::TimerGroup,
 };
 use esp_println::println;
 
@@ -16,7 +16,7 @@ async fn main(_spawner: Spawner) {
     // initialize the peripherals
     let system = SystemControl::new(peripherals.SYSTEM);
     let clock = ClockControl::boot_defaults(system.clock_control).freeze();
-    let timer = SystemTimer::new_async(peripherals.SYSTIMER); // async because embassy needs async
+    let timer = TimerGroup::new_async(peripherals.TIMG0, &clock);
 
     esp_hal_embassy::init(&clock, timer);
 
