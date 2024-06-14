@@ -2,11 +2,14 @@ FROM docker.io/rust:alpine AS builder
 
 WORKDIR /app
 
-# Install dependencies
+# Install build dependencies
 RUN apk update && apk add --no-cache \
     build-base \
     eudev-dev \
     pkgconfig
+
+# copy the lockfiles first to allow docker to cache layer
+COPY Cargo.toml Cargo.lock ./
 
 COPY . .
 
