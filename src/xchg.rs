@@ -36,8 +36,8 @@ impl<'channel, T: Sized, const N: usize> XchgPipeRx<'channel, T, N> {
     }
 }
 
-pub fn channel<'a, T, const N: usize>(
-    channel: &'a embassy_sync::channel::Channel<CriticalSectionRawMutex, T, N>,
+pub fn channel<T, const N: usize>(
+    channel: &embassy_sync::channel::Channel<CriticalSectionRawMutex, T, N>,
 ) -> (XchgPipeTx<'_, T, N>, XchgPipeRx<'_, T, N>) {
     let tx = XchgPipeTx {
         sender: channel.sender(),
