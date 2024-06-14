@@ -1,4 +1,4 @@
-FROM rust:alpine AS builder
+FROM docker.io/rust:alpine AS builder
 
 WORKDIR /app
 
