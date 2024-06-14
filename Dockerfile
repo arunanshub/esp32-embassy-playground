@@ -1,21 +1,12 @@
-FROM alpine:latest AS builder
+FROM rust:alpine AS builder
 
 WORKDIR /app
 
 # Install dependencies
 RUN apk update && apk add --no-cache \
     build-base \
-    libusb \
     eudev-dev \
-    git \
-    pkgconfig \
-    curl
-
-# Install Rust
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-
-# Set environment variables for Rust
-ENV PATH="/root/.cargo/bin:${PATH}"
+    pkgconfig
 
 COPY . .
 
@@ -29,4 +20,3 @@ WORKDIR /app
 
 # Copy the built binary from the build stage
 COPY --from=builder /app/target/riscv32imc-unknown-none-elf/release/esp32c3-working .
-
