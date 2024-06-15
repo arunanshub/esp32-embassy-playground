@@ -47,7 +47,7 @@ jobs:
         run: cargo clippy --all-features --release
 
       - name: Install build dependencies 📦
-        run: apt-get install -y build-essential pkg-config libudev-dev
+        run: sudo apt-get install -y build-essential pkg-config libudev-dev
 
       # TODO: maybe this can be a nightly build of sorts
       # FIXME: alternative to hardcoding the target?
