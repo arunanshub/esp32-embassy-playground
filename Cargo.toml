@@ -16,6 +16,5 @@ heapless = "0.8.0"
 
 [profile.release]
 lto = true
-strip = "debuginfo"
+strip = "debuginfo"  # do not completely strip it otherwise defmt will not work
 codegen-units = 1
-incremental = false
