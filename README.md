@@ -7,7 +7,7 @@ ESP32 and Embassy, let this repo serve you as a guiding light 🔦
 
 0. Connect your ESP32 with your computer.
 
-1. Install [`usbipd`](https://github.com/dorssel/usbipd-win)
+1. Install [`usbipd`](https://github.com/dorssel/usbipd-win) on Windows
 
    ```pwsh
    winget install usbipd
@@ -45,5 +45,17 @@ ESP32 and Embassy, let this repo serve you as a guiding light 🔦
    ```
 
    Replace `<BUSID>` with the BUSID you found earlier.
+
+5. Add yourself to the `dialout` user group:
+
+   ```sh
+   sudo usermod -a -G dialout $USER
+   ```
+
+6. Run the program:
+
+   ```sh
+   cargo r -r
+   ```
 
 Refer to [`usbipd-win`'s](https://github.com/dorssel/usbipd-win) repo for more information.
