@@ -18,12 +18,15 @@ use esp_hal::{
     rng::Rng,
     sha::{Sha, ShaMode},
     system::SystemControl,
-    timer::timg::TimerGroup,
+    timer::{timg::TimerGroup, ErasedTimer, OneShotTimer},
 };
 use heapless::{String, Vec};
+use static_cell::StaticCell;
 use xchg::XchgPipeTx;
 
 static SHARED: Channel<CriticalSectionRawMutex, (&'static str, u32), 8> = Channel::new();
+
+static ONE_SHOT_TIMER: StaticCell<[OneShotTimer<ErasedTimer>; 1]> = StaticCell::new();
 
 #[embassy_executor::task]
 async fn producer(tx: XchgPipeTx<'static, (&'static str, u32), 8>) {
@@ -63,9 +66,13 @@ async fn main(spawner: Spawner) {
     // initialize the peripherals
     let system = SystemControl::new(peripherals.SYSTEM);
     let clock = ClockControl::boot_defaults(system.clock_control).freeze();
-    let timer = TimerGroup::new_async(peripherals.TIMG0, &clock);
 
-    esp_hal_embassy::init(&clock, timer);
+    // initialize the timer(s)
+    let timer_group = TimerGroup::new(peripherals.TIMG0, &clock, None);
+    let one_shot_timer = OneShotTimer::new(timer_group.timer0.into());
+    let timers_ref = ONE_SHOT_TIMER.init([one_shot_timer]);
+
+    esp_hal_embassy::init(&clock, timers_ref);
     defmt::println!("Starting: use DEFMT_LOG to see logs!");
 
     warn!("initializing the RNG!");
