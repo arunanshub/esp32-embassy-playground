@@ -46,10 +46,13 @@ jobs:
       - name: Run Clippy 📎
         run: cargo clippy --all-features --release
 
+      - name: Install build dependencies 📦
+        run: sudo apt-get install -y build-essential pkg-config libudev-dev
+
       # TODO: maybe this can be a nightly build of sorts
       # FIXME: alternative to hardcoding the target?
-    #   - name: Build 🏗️
-    #     run: cargo build --workspace --all-features --release --target riscv32imc-unknown-none-elf
+      - name: Build into binary 🏗️
+        run: cargo build --workspace --all-features --release --target riscv32imc-unknown-none-elf
 
     #   - name: Run doctests 📜
     #     run: cargo test --doc --all-features --workspace
@@ -60,8 +63,8 @@ jobs:
     #   - name: Combine coverage 📔
     #     run: cargo llvm-cov report --lcov --output-path coverage.lcov
 
-      # - name: Upload Coverage Report 📤
-      #   uses: coverallsapp/github-action@v2.2.3
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     file: ./coverage.lcov
+    # - name: Upload Coverage Report 📤
+    #   uses: coverallsapp/github-action@v2.2.3
+    #   with:
+    #     github-token: ${{ secrets.GITHUB_TOKEN }}
+    #     file: ./coverage.lcov
